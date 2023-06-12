@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initAdapter();
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void OpenDBProduct() {
         db = openOrCreateDatabase(DB_NAME,MODE_PRIVATE,null);
+
     }
 
     private void CopyDBProduct() {
@@ -117,20 +118,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadDataFromDB() {
         products.clear();
-        Product p;
+        Product s;
         Cursor cursor = db.query(TBL_NAME,null,null,null,null,null,null);
         while (cursor.moveToNext()){
-            String pId = cursor.getString(0);
-            String pName = cursor.getString(1);
-            Float pPrice = cursor.getFloat(2);
-            p = new Product(pId,pName,pPrice);
-            products.add(p);
+            String sId = cursor.getString(0);
+            String sName = cursor.getString(1);
+            Double sPrice = cursor.getDouble(2);
+            s = new Product(sId,sName,sPrice);
+            products.add(s);
         }
         cursor.close();
         adapter = new ArrayAdapter<Product>(MainActivity.this, android.R.layout.simple_list_item_1,products);
         binding.lvProduct.setAdapter(adapter);
     }
-
     @Override
     protected void onStart() {
         super.onStart();

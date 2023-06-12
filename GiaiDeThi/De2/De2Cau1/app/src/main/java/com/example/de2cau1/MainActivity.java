@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
     int randomNumb;
+    int position;
 
     Handler handler = new Handler();
 
     Runnable foregroundThread = new Runnable() {
         @Override
         public void run() {
-            for(int i =0;i<=randomNumb;i++) {
-                if (i % 2 == 0) {
+                if (position % 2 == 0) {
                     Button btn = new Button(MainActivity.this);
                     btn.setText(Integer.toString(randomNumb));
                     btn.setBackgroundColor(Color.GRAY);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     edt.setText(Integer.toString(randomNumb));
                     edt.setLayoutParams(params);
                     binding.layoutContainer.addView(edt);
-                }
+
             }
         }
     };
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             Thread backgroundThreat = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i <= numb; i++) {
+                    for (int i = 0; i < numb; i++) {
+                        position = i;
                         randomNumb = random.nextInt(100);
                         handler.post(foregroundThread);
                         SystemClock.sleep(100);

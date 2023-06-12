@@ -19,10 +19,9 @@
             android:id="@+id/btnDraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Draw View"
+            android:layout_weight="1"
             android:layout_gravity="center"
-            android:backgroundTint="@color/teal_200"
             android:gravity="center"
             />
 
@@ -36,12 +35,10 @@
 
     </LinearLayout>
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         >
 
         <LinearLayout
@@ -52,7 +49,5 @@
             />
 
     </ScrollView>
-
-
 
 </LinearLayout>

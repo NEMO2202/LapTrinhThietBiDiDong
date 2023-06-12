@@ -3,9 +3,9 @@ package com.example.models;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-     String ProductId;
-     String ProductName;
-     Float ProductPrice;
+    String ProductId;
+    String ProductName;
+    Double ProductPrice;
 
     public String getProductId() {
         return ProductId;
@@ -23,23 +23,23 @@ public class Product implements Serializable {
         ProductName = productName;
     }
 
-    public Float getProductPrice() {
+    public Double getProductPrice() {
         return ProductPrice;
     }
 
-    public void setProductPrice(Float productPrice) {
+    public void setProductPrice(Double productPrice) {
         ProductPrice = productPrice;
     }
 
-    public Product(String productId, String productName, Float productPrice) {
-        this.ProductId = productId;
-        this.ProductName = productName;
-        this.ProductPrice = productPrice;
+    public Product(String productId, String productName, Double productPrice) {
+        ProductId = productId;
+        ProductName = productName;
+        ProductPrice = productPrice;
     }
 
     @Override
     public String toString() {
-        return "Mã sản phẩm: " + ProductId + '\n' + "Tên sản phẩm: " + ProductName + '\n' + "Giá sản phẩm: " + ProductPrice ;
+        return "Mã sách: " + ProductId+ '\n' + "Tên sách " + ProductName + '\n' + "Giá bán: " + ProductPrice ;
 
     }
 }

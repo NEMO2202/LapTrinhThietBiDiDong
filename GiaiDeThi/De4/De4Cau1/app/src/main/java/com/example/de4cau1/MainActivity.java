@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     Random random = new Random();
 
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams txtparams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
     int randomNumb;
 
@@ -34,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
 
-    LayoutParams btnParams, txtParams;
-
 
     Runnable foregroundThread = new Runnable() {
         @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             if(count <= 3){
                 Button btn = new Button(MainActivity.this);
                 btn.setText(Integer.toString(randomNumb));
-                btn.setLayoutParams(params);
+                btn.setLayoutParams(buttonParams);
                 //setUpButtonParam(btn);
 
                 if(randomNumb % 2 == 0){
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(count == 1 || count == 2){
                     TextView txt = new TextView(MainActivity.this);
-                    txt.setLayoutParams(params);
+                    txt.setLayoutParams(txtparams);
                     //setUpTextViewParam(txt);
                     linearLayout.addView(txt);
                 }
@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        params.weight = 1;
-        params.topMargin = 15;
+        //params.weight = 1;12
+        buttonParams.weight = 1.53333333f;
+        txtparams.weight = 0.2f;
+        params.topMargin = 30;
         setUpLinearLayout();
         addEvents();
                 
@@ -124,15 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private void setUpTextViewParam(TextView txt){
-        txtParams.weight = 1.0f;
-        txt.setLayoutParams(txtParams);
-    }
 
-    private void setUpButtonParam(Button btn){
-        btnParams.weight = 1.0f;
-        btn.setLayoutParams(btnParams);
-    }
     private void setUpLinearLayout() {
         linearLayout = new LinearLayout(MainActivity.this);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);

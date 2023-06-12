@@ -19,14 +19,13 @@ public class SavedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_saved);
+        //  setContentView(R.layout.activity_saved);
         binding = ActivitySavedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getDataProduct();
-                
+        getDataBook();
     }
 
-    private void getDataProduct() {
+    private void getDataBook() {
         Intent intent = getIntent();
         product = (Product) intent.getSerializableExtra("ProductInfo");
         binding.edtProductId.setText(product.getProductId());
@@ -42,7 +41,7 @@ public class SavedActivity extends AppCompatActivity {
                 ContentValues values = new ContentValues();
                 values.put("ProductId",binding.edtProductId.getText().toString());
                 values.put("ProductName",binding.edtProductName.getText().toString());
-                values.put("ProductPrice",Float.parseFloat(binding.edtProductPrice.getText().toString()));
+                values.put("ProductPrice",String.valueOf(binding.edtProductPrice.getText()));
                 long numbOfRows = MainActivity.db.insert(HelperAdapter.TBL_NAME,null,values);
                 if(numbOfRows > 0){
                     Toast.makeText(SavedActivity.this,"Success!!",Toast.LENGTH_SHORT).show();

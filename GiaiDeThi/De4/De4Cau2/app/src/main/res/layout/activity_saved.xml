@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nhập mã sản phẩm : "
+            android:text="Nhập mã sách sản phẩm : "
             android:textSize="12sp"
             android:textColor="@color/black"
             />
@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
+            android:hint="Nhap thong tin"
             />
     </LinearLayout>
     <LinearLayout
@@ -61,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nhập tên sản phẩm: "
+            android:text="Nhập tên sản phẩm  : "
             android:textSize="12sp"
             android:textColor="@color/black"
             />
@@ -70,6 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
+            android:hint="Nhap thong tin"
+
             />
     </LinearLayout>
     <LinearLayout
@@ -80,7 +83,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nhập giá bán            : "
+            android:text="Nhập giá bán: "
             android:textSize="12sp"
             android:textColor="@color/black"
             />
@@ -89,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
+            android:hint="Nhap thong tin"
             />
     </LinearLayout>
     <LinearLayout

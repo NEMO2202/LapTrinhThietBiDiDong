@@ -23,23 +23,22 @@ public class MainActivity extends AppCompatActivity {
     int randomNumb;
     Handler handler = new Handler();
 
+    int position;
+
     Runnable foregroundThread = new Runnable() {
         @Override
         public void run() {
-            for (int i = 0; i <= randomNumb; i++) {
-                //Update UI
-                Button btn = new Button(MainActivity.this);
-                params = new LinearLayout.LayoutParams(500, LinearLayout.LayoutParams.WRAP_CONTENT);
-                btn.setText(Integer.toString(randomNumb));
-                //btn.setWidth(70);
-                if (i % 2 == 0) {
-                    params.gravity = Gravity.LEFT;
-                } else {
-                    params.gravity = Gravity.RIGHT;
-                }
-                btn.setLayoutParams(params);
-                binding.layoutContainer.addView(btn);
+            Button btn = new Button(MainActivity.this);
+            params = new LinearLayout.LayoutParams(500, LinearLayout.LayoutParams.WRAP_CONTENT);
+            btn.setText(Integer.toString(randomNumb));
+            //btn.setWidth(70);
+            if (position % 2 == 0) {
+                params.gravity = Gravity.LEFT;
+            } else {
+                params.gravity = Gravity.RIGHT;
             }
+            btn.setLayoutParams(params);
+            binding.layoutContainer.addView(btn);
         }
     };
     @Override
@@ -73,10 +72,11 @@ public class MainActivity extends AppCompatActivity {
             Thread backgroundThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i <= numb; i++) {
+                    for (int i = 0; i < numb; i++) {
+                        position = i;
                         randomNumb = random.nextInt(100);
                         handler.post(foregroundThread);
-                        SystemClock.sleep(100);
+                        SystemClock.sleep(200);
                     }
                 }
             });
