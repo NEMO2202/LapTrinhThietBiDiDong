@@ -1,0 +1,21 @@
+ binding.btnDeleteEmployee.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DeletedActivity.this);
+            builder.setTitle(Xác nhận sửa);
+            builder.setMessage(Bạn có chắc muốn sửa nhân viên  ' + employee.getEmployeeName()+ ' không  );
+            builder.setIcon(android.R.drawable.ic_delete);
+            builder.setPositiveButton(Yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ContentValues values = new ContentValues();
+                    values.put(EmployeeName, binding.edtEmployeeName.getText().toString());
+                    values.put(EmployeeAge,String.valueOf(binding.edtEmployeeAge.getText()));
+                    int numbOfRow = MainActivity.db.update(HelperAdapter.TBL_NAME,values,EmployeeId= , new String[]{employee.getEmployeeId()});
+                    if (numbOfRow  0) {
+                        Toast.makeText(DeletedActivity.this, Success!, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(DeletedActivity.this, Error!, Toast.LENGTH_SHORT).show();
+                    }
+                    finish();
+                }
+            });
