@@ -118,25 +118,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             int numb = Integer.parseInt(binding.edtNumbOfView.getText().toString());
-            if(numb % 2 == 0){
-                binding.layoutContainer.removeAllViews();
-                Thread backgroundThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for(int i = 1; i <= numb; i++){
-                            randomNumb = random.nextInt(10);
-                            handler.post(foregroundThread);
-                            SystemClock.sleep(100);
-                        }
+            binding.layoutContainer.removeAllViews();
+            Thread backgroundThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int i = 1; i <= numb*2; i++){
+                        randomNumb = random.nextInt(10);
+                        handler.post(foregroundThread);
+                        SystemClock.sleep(100);
                     }
-                });
-                backgroundThread.start();
-            }
-            else{
-                Toast toast = Toast.makeText(MainActivity.this, "Vui lòng nhập số chẵn!", Toast.LENGTH_LONG );
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
+                }
+            });
+            backgroundThread.start();
         }
     }
 
