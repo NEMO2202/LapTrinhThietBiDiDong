@@ -1,11 +1,17 @@
 package com.example.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.model.Employee;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelperAdapter extends SQLiteOpenHelper {
     public static final String DB_NAME = "employee_db.sqlite";
@@ -53,5 +59,27 @@ public class HelperAdapter extends SQLiteOpenHelper {
             execSql("INSERT INTO " + TBL_NAME + " VALUES('NV-115','Trương Đại Tín', 12) ");
             execSql("INSERT INTO " + TBL_NAME + " VALUES('NV-116','Hồ Đại Đức', 19) ");
         }
+    }
+    public List<Employee> getAllEmployee(){
+        List<Employee> employees = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TBL_NAME,null,null,null,null,null,null);
+        while(cursor.moveToNext()){
+            String EId = cursor.getString(0);
+            String EName = cursor.getString(1);
+            Integer Eage = cursor.getInt(2);
+            Employee employee = new Employee(EId,EName,Eage);
+            employees.add(employee);
+        }cursor.close();
+        return employees;
+    }
+    public long DeletedEmployee(String EmployeeId, String EmployeeName, Integer EmployeeAge){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("EmployeeName", EmployeeName);
+        values.put("EmployeeAge",EmployeeAge);
+        long Num = db.delete(HelperAdapter.TBL_NAME,"EmployeeId=? ", new String[]{String.valueOf(EmployeeId)});
+        db.close();
+        return Num;
     }
 }
