@@ -1,11 +1,17 @@
 package com.example.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.models.Phone;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelperAdapter extends SQLiteOpenHelper {
     public static final String DB_NAME = "phone_db.sqlite";
@@ -54,5 +60,28 @@ public class HelperAdapter extends SQLiteOpenHelper {
             execSql("INSERT INTO " + TBL_NAME + " VALUES('SP-116','HKPhone Revo LEAD', 19000) ");
         }
     }
+public List<Phone> getAllPhone(){
+        List<Phone> phones = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TBL_NAME,null,null,null,null, null,null);
+        while(cursor.moveToNext()){
+            String pId = cursor.getString(0);
+            String pName = cursor.getString(1);
+            Double pPrice = cursor.getDouble(2);
+            Phone p = new Phone(pId,pName,pPrice);
+            phones.add(p);
+        }
+        cursor.close();
+        return phones;
+}
+public long DeletedPhone(String PhoneId, String PhoneName, Double PhonePrice){
+        SQLiteDatabase db = getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put("PhoneName",PhoneName);
+    values.put("PhonePrice",PhonePrice);
+    long numOfRows = db.delete(HelperAdapter.TBL_NAME,"PhoneId=?", new String[]{String.valueOf(PhoneId)});
+    db.close();
+    return numOfRows;
+}
 
 }

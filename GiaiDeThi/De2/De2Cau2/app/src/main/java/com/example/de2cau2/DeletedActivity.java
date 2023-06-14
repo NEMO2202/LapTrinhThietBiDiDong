@@ -45,7 +45,8 @@ public class DeletedActivity extends AppCompatActivity {
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        int numbOfRow = MainActivity.db.delete(HelperAdapter.TBL_NAME, "PhoneId=?", new String[]{String.valueOf(phone.getPhoneId())});
+                        HelperAdapter db = new HelperAdapter(DeletedActivity.this);
+                        long numbOfRow = db.DeletedPhone(binding.edtPhoneId.getText().toString(),binding.edtPhoneName.getText().toString(),Double.valueOf(binding.edtPhonePrice.getText().toString()));
                         if (numbOfRow > 0) {
                             Toast.makeText(DeletedActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                         } else {

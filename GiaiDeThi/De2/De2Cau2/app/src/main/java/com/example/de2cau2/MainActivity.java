@@ -27,13 +27,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String DB_PATH_SUFFIX = "/databases/";
     ActivityMainBinding binding;
     ArrayList<Phone> phone;
     Phone selectedSmartPhones = null;
-    HelperAdapter dbhelper;
-    public static SQLiteDatabase db;
-    private ArrayAdapter<Phone> adapter;
+    HelperAdapter dbhelper = new HelperAdapter(this);
+     ArrayAdapter<Phone> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initAdapter();
-        CopyDBSmartPhone();
-        OpenDBSmartPhone();
-        phone = new ArrayList<Phone>();
         addEvents();
-        registerForContextMenu(binding.lvSmartPhone);
     }
 
     private void addEvents() {
@@ -61,47 +55,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void OpenDBSmartPhone() {
-        db = openOrCreateDatabase(DB_NAME,MODE_PRIVATE,null);
-    }
-
-    private void CopyDBSmartPhone() {
-        try{
-            File dbFile = getDatabasePath(DB_NAME);
-            if(!dbFile.exists()){
-                if(processCopy()){
-                    Toast.makeText(this, "Success!!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }catch(Exception e){
-            Log.e("Error: ",e.toString());
-        }
-    }
-
-    private boolean processCopy() {
-        String dbPath = getApplicationInfo().dataDir+DB_PATH_SUFFIX+DB_NAME;
-        try{
-            InputStream inputStream = getAssets().open(DB_NAME);
-            File f = new File(getApplicationInfo().dataDir+DB_PATH_SUFFIX);
-            if(!f.exists()){
-                f.mkdir();
-            }
-            OutputStream outputStream = new FileOutputStream(dbPath);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer))>0){
-                outputStream.write(buffer,0, length);
-            }
-            outputStream.flush(); outputStream.close(); inputStream.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     private void initAdapter() {
         dbhelper = new HelperAdapter(MainActivity.this);
         dbhelper.CreateSampleData();
@@ -109,23 +62,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         loadDataFromDB();
+        adapter.notifyDataSetChanged();
         super.onResume();
 
 
     }
 
     private void loadDataFromDB() {
-        phone.clear();
-        Phone p;
-        Cursor cursor = db.query(TBL_NAME,null,null,null,null,null,null);
-        while (cursor.moveToNext()){
-            String pId = cursor.getString(0);
-            String pName = cursor.getString(1);
-            Double pPrice = cursor.getDouble(2);
-            p = new Phone(pId,pName,pPrice);
-            phone.add(p);
-        }
-        cursor.close();
+       phone = new ArrayList<>();
+       phone.addAll(dbhelper.getAllPhone());
         adapter = new ArrayAdapter<Phone>(MainActivity.this, android.R.layout.simple_list_item_1,phone);
         binding.lvSmartPhone.setAdapter(adapter);
 
